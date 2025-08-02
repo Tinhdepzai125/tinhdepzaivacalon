@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HPBD</title>
+  <title>SIGMAMALE</title>
   <style>
     body {
-      background: #262624;
+      background: #2c498f;
       overflow: hidden;
       margin: 0;
       font-family: "Times New Roman", Times, serif;
@@ -19,16 +19,16 @@
       font-weight: 500;
       animation: move linear infinite;
       color: white;
-      text-shadow: 0 0 5px white;
+      text-shadow: 0 0 7px white;
     }
 
     @keyframes move {
       0% {
-        transform: translateX(100vw) rotate(0deg);
+        transform: translateY(-20vw) translateX(-100vw) rotate(0deg);
         opacity: 1;
       }
       100% {
-        transform: translateX(-100vw) rotate(10deg);
+        transform: translateY(100vw) translateX(100vw) rotate(20deg);
         opacity: 0;
       }
     }
@@ -36,7 +36,7 @@
     .play-btn {
       position: fixed;
       top: 100px;
-      left: 10%;
+      left: 5%;
       transform: translateX(-50%);
       z-index: 9999;
       padding: 12px 24px;
@@ -51,8 +51,8 @@
 
     .play-btn:hover {
       transform: translateX(-50%) scale(1.1);
-      background-color: #444;
-      color: white;
+      background-color: blue;
+      color: #FFFFFFFF;
     }
   </style>
 </head>
@@ -68,13 +68,13 @@
 
   <script>
     const messages = [
-      "Chúc mừng sinh nhật", "Happy birthday to you", "MÁY TAO SẮP NỔ RỒI HỐ HỐ",
-      "Nghỉ hè chill nha bro", "Happy birthday", "Sinh nhật vui vẻ", "Monkey never die", "🎂🎂🎂🎂",
+      "Chúc mừng sinh nhật", "Happy birthday", "Nahh EZZZZZ bruh",
+      "Nghỉ hè chill nha bro", "Happy birthday", "Sinh nhật vui vẻ", "Monkey never die", "🎂🎂🎂🎂", "🍀🍀🍀🍀", "🎊🎊🎊🎊", "$$$", "✨✨✨"
       // Có thể rút ngắn bớt để nhẹ hơn
     ];
 
     function randomColor() {
-      return `hsl(${Math.random() * 360}, 100%, 70%)`;
+      return `hsl(${Math.random() * 360}, 90%, 60%)`;
     }
 
     function createText() {
@@ -87,10 +87,10 @@
       text.style.fontSize = `${Math.random() * 20 + 20}px`;
       text.style.animationDuration = `${Math.random() * 5 + 5}s`;
       document.body.appendChild(text);
-      setTimeout(() => text.remove(), 30000);
+      setTimeout(() => text.remove(), 25000);
     }
 
-    setInterval(createText, 200);
+    setInterval(createText, 120);
 
     function playMusic() {
       const audio = document.getElementById("my-audio");
