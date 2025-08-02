@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HPBD</title>
+  <style>
+    body {
+      background: #262624;
+      overflow: hidden;
+      margin: 0;
+      font-family: 'Inter', 'Helvetica Neue', 'Segoe UI', sans-serif;
+    }
+    .text {
+      position: absolute;
+      white-space: nowrap;
+      font-size: 24px;
+      font-weight: 500;
+      animation: move linear infinite;
+      color: white;
+      text-shadow: 0 0 5px white;
+    }
+    @keyframes move {
+      0% {
+        transform: translateX(100vw) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(-100vw) rotate(10deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<audio autoplay loop>
+  <source src="https://files.catbox.moe/yhq0kr.mp3" type="audio/mpeg">
+</audio>
+<body>
+  <script>
+    const messages = [
+      "Chúc mừng sinh nhật",
+      "Happy birthday to you",
+      "MÁY TAO SẮP NỔ RỒI HỐ HỐ",
+      "Nghỉ hè chill nha bro",
+      "Happy birthday",
+      "Sinh nhật vui vẻ",
+      "Monkey never die",
+      "🎂🎂🎂🎂",
+    ];
+
+    function randomColor() {
+      return `hsl(${Math.random() * 360}, 100%, 70%)`;
+    }
+
+    function createText() {
+      const text = document.createElement("div");
+      text.className = "text";
+      text.textContent = messages[Math.floor(Math.random() * messages.length)];
+      text.style.top = `${Math.random() * 100}vh`;
+      text.style.left = "100vw";
+      text.style.color = randomColor();
+      text.style.fontSize = `${Math.random() * 20 + 20}px`;
+      text.style.animationDuration = `${Math.random() * 5 + 5}s`;
+      document.body.appendChild(text);
+
+      setTimeout(() => text.remove(), 30000);
+    }
+
+    setInterval(createText, 230);
+  </script>
+</body>
+</html>
