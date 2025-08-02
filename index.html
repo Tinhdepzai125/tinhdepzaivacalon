@@ -9,8 +9,9 @@
       background: #262624;
       overflow: hidden;
       margin: 0;
-      font-family: 'Inter', 'Helvetica Neue', 'Segoe UI', sans-serif;
+      font-family: "Times New Roman", Times, serif;
     }
+
     .text {
       position: absolute;
       white-space: nowrap;
@@ -20,6 +21,7 @@
       color: white;
       text-shadow: 0 0 5px white;
     }
+
     @keyframes move {
       0% {
         transform: translateX(100vw) rotate(0deg);
@@ -30,22 +32,45 @@
         opacity: 0;
       }
     }
+
+    .play-btn {
+      position: fixed;
+      top: 100px;
+      left: 10%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      padding: 12px 24px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background-color: white;
+      color: black;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .play-btn:hover {
+      transform: translateX(-50%) scale(1.1);
+      background-color: #444;
+      color: white;
+    }
   </style>
 </head>
-<audio autoplay loop>
-  <source src="https://files.catbox.moe/yhq0kr.mp3" type="audio/mpeg">
-</audio>
 <body>
+
+  <!-- Nút phát nhạc -->
+  <button class="play-btn" onclick="playMusic()">▶️ Play</button>
+
+  <!-- Audio ẩn -->
+  <audio id="my-audio" loop>
+    <source src="https://files.catbox.moe/yhq0kr.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
     const messages = [
-      "Chúc mừng sinh nhật",
-      "Happy birthday to you",
-      "MÁY TAO SẮP NỔ RỒI HỐ HỐ",
-      "Nghỉ hè chill nha bro",
-      "Happy birthday",
-      "Sinh nhật vui vẻ",
-      "Monkey never die",
-      "🎂🎂🎂🎂",
+      "Chúc mừng sinh nhật", "Happy birthday to you", "MÁY TAO SẮP NỔ RỒI HỐ HỐ",
+      "Nghỉ hè chill nha bro", "Happy birthday", "Sinh nhật vui vẻ", "Monkey never die", "🎂🎂🎂🎂",
+      // Có thể rút ngắn bớt để nhẹ hơn
     ];
 
     function randomColor() {
@@ -62,11 +87,15 @@
       text.style.fontSize = `${Math.random() * 20 + 20}px`;
       text.style.animationDuration = `${Math.random() * 5 + 5}s`;
       document.body.appendChild(text);
-
       setTimeout(() => text.remove(), 30000);
     }
 
-    setInterval(createText, 230);
+    setInterval(createText, 200);
+
+    function playMusic() {
+      const audio = document.getElementById("my-audio");
+      audio.play();
+    }
   </script>
 </body>
 </html>
