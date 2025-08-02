@@ -40,7 +40,7 @@
     .text {
       position: absolute;
       white-space: nowrap;
-      font-size: 24px;
+      font-size: 12px;
       font-weight: 600;
       color: white;
       text-shadow: 0 0 7px white;
@@ -103,7 +103,25 @@
   <script>
     const messages = [
       "Chúc mừng sinh nhật!", "Happy birthday!", "🎂🎂🎂", "🎉🎉🎉",
-      "Sinh nhật vui vẻ!", "Wishing you the best!", "🍀🍀🍀", "✨✨✨", "$$$$"
+      "Sinh nhật vui vẻ!", "Wishing you the best!", "🍀🍀🍀", "✨✨✨", "$$$$",
+  "🎉🎉🎉 HAPPY BIRTHDAYYYYYY!!! 🎉🎉🎉",
+  "🔥🔥🔥 TUỔI MỚI CHÁY HẾT MÌNH 🔥🔥🔥",
+  "💥💥💥💥💥💥💥💥💥💥💥💥💥💥",
+  "🤑🤑🤑 TIỀN NHIỀU NHƯ BUG GAME 🤑🤑🤑",
+  "🍌🍌🍌🍌 ĐƯA CHUỐI ĐÂYYYYYY 🍌🍌🍌🍌",
+  "🌈🌈🌈 SÁNG NHƯ LED RGB 🌈🌈🌈",
+  "🐒🐒🐒 MONKEY NEVER DIEEEE 🐒🐒🐒",
+  "👑👑👑 BIRTHDAY Ò KINGGG 👑👑👑",
+  "✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨",
+  "🥳🥳🥳 SINH NHẬT TỚI RỒIIII 🥳🥳🥳",
+  "📣📣📣 TẬP TRUNG! SINH NHẬT BRO NÈ 📣📣📣",
+  "🚨🚨🚨 CẢNH BÁO: QUÁ MỨC NGẦU 🚨🚨🚨",
+  "🎊🎊🎊 TUỔI MỚI NÓI KHÔNG VỚI DRAMA 🎊🎊🎊",
+  "💫💫💫 A FLASHBANG 💫💫💫",
+  "🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂🎂",
+  "💀💀💀 NGƯỜI ĐÃ GIÀ HƠN RỒI ĐÓ 💀💀💀",
+  "📦📦📦 QUÀ NÀY QUÁ SIGMA 📦📦📦",
+  "😎😎😎 TUỔI MỚI VẪN MÃI SIGMA 😎😎😎",
       ];
 
     function randomColor() {
@@ -126,7 +144,6 @@
     let raining = false;
 
     function startCelebration() {
-      // Fade in nền
       document.getElementById("bg").classList.add("visible");
 
       document.querySelector(".play-btn").classList.add("hidden");
