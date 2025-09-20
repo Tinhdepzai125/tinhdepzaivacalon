@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Công cụ chuyển mã màu điện trở</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    .color-bar { width: 40px; height: 120px; display: inline-block; margin: 2px; border: 1px solid #222; }
+    #result { margin-top: 20px; }
+    label, input, select { margin: 4px; }
+  </style>
+</head>
+<body>
+  <h2>Công cụ chuyển giá trị điện trở sang mã màu</h2>
+  <form id="resistorForm">
+    <label for="value">Giá trị (Ω):</label>
+    <input type="number" id="value" min="0" step="any" required>
+    <label for="tolerance">Sai số:</label>
+    <select id="tolerance">
+      <option value="1">1%</option>
+      <option value="2">2%</option>
+      <option value="5">5%</option>
+      <option value="10">10%</option>
+      <option value="0.5">0.5%</option>
+      <option value="0.25">0.25%</option>
+      <option value="0.1">0.1%</option>
+      <option value="0.05">0.05%</option>
+    </select>
+    <label for="bands">Số vạch màu:</label>
+    <select id="bands">
+      <option value="3">3</option>
+      <option value="4" selected>4</option>
+      <option value="5">5</option>
+    </select>
+    <button type="submit">Chuyển mã màu</button>
+  </form>
+  <div id="result"></div>
+
+<script>
+const colors = [
+  {name: "Đen", code: "black", digit: 0, multiplier: 1, rgb: "#000"},
+  {name: "Nâu", code: "brown", digit: 1, multiplier: 10, tolerance: 1, rgb: "#8B4513"},
+  {name: "Đỏ", code: "red", digit: 2, multiplier: 100, tolerance: 2, rgb: "#FF0000"},
+  {name: "Cam", code: "orange", digit: 3, multiplier: 1_000, rgb: "#FFA500"},
+  {name: "Vàng", code: "yellow", digit: 4, multiplier: 10_000, rgb: "#FFFF00"},
+  {name: "Lục", code: "green", digit: 5, multiplier: 100_000, tolerance: 0.5, rgb: "#008000"},
+  {name: "Lam", code: "blue", digit: 6, multiplier: 1_000_000, tolerance: 0.25, rgb: "#0000FF"},
+  {name: "Tím", code: "violet", digit: 7, multiplier: 10_000_000, tolerance: 0.1, rgb: "#800080"},
+  {name: "Xám", code: "grey", digit: 8, multiplier: 100_000_000, tolerance: 0.05, rgb: "#808080"},
+  {name: "Trắng", code: "white", digit: 9, multiplier: 1_000_000_000, rgb: "#FFF"},
+  {name: "Vàng kim", code: "gold", multiplier: 0.1, tolerance: 5, rgb: "#FFD700"},
+  {name: "Bạc", code: "silver", multiplier: 0.01, tolerance: 10, rgb: "#C0C0C0"}
+];
+
+function getColorByDigit(digit) {
+  return colors.find(c => c.digit === digit);
+}
+function getColorByMultiplier(multiplier) {
+  return colors.find(c => c.multiplier === multiplier);
+}
+function getColorByTolerance(tol) {
+  return colors.find(c => c.tolerance === tol);
+}
+
+function resistorToColorBands(value, tolerance, bands) {
+  let val = value;
+  let digits = [];
+  let multiplier = 0;
+  if (bands == 3 || bands == 4) {
+    // 2 digits + multiplier
+    let power = Math.floor(Math.log10(val));
+    let d1 = Math.floor(val / (10 ** power));
+    let d2 = Math.floor((val % (10 ** power)) / (10 ** (power - 1)));
+    digits = [d1, d2];
+    multiplier = 10 ** (power - 1);
+  } else if (bands == 5) {
+    // 3 digits + multiplier
+    let power = Math.floor(Math.log10(val));
+    let d1 = Math.floor(val / (10 ** (power - 2)));
+    let d2 = Math.floor((val % (10 ** (power - 2))) / (10 ** (power - 1)));
+    let d3 = Math.floor((val % (10 ** (power - 1))) / (10 ** (power - 0)));
+    digits = [d1, d2, d3];
+    multiplier = 10 ** (power - 2);
+  }
+  // Round multiplier to closest available
+  let multColor = colors.reduce((prev, curr) =>
+    Math.abs(curr.multiplier - multiplier) < Math.abs(prev.multiplier - multiplier) ? curr : prev
+  );
+  // Find tolerance color
+  let tolColor = colors.find(c => c.tolerance === Number(tolerance));
+  return {digits, multColor, tolColor};
+}
+
+document.getElementById('resistorForm').onsubmit = function(e) {
+  e.preventDefault();
+  let value = Number(document.getElementById('value').value);
+  let tolerance = Number(document.getElementById('tolerance').value);
+  let bands = Number(document.getElementById('bands').value);
+  if (value < 1) {
+    document.getElementById('result').innerHTML = "Giá trị phải lớn hơn 0!";
+    return;
+  }
+  let {digits, multColor, tolColor} = resistorToColorBands(value, tolerance, bands);
+  let bandColors = [];
+  if (bands === 3) {
+    bandColors = [getColorByDigit(digits[0]), getColorByDigit(digits[1]), multColor];
+  } else if (bands === 4) {
+    bandColors = [getColorByDigit(digits[0]), getColorByDigit(digits[1]), multColor, tolColor];
+  } else if (bands === 5) {
+    bandColors = [getColorByDigit(digits[0]), getColorByDigit(digits[1]), getColorByDigit(digits[2]), multColor, tolColor];
+  }
+  let html = "<b>Mã màu:</b><br>";
+  bandColors.forEach((c, i) => {
+  html += `
+    <div style="display:inline-block; text-align:center;">
+      <div class="color-bar" style="background:${c ? c.rgb : '#fff'}" title="${c ? c.name : 'Không xác định'}"></div>
+      <div style="font-size:13px;">${c ? c.name : 'Không xác định'}</div>
+    </div>
+  `;
+});
+  html += "<br>";
+  html += "Giá trị: " + value + " Ω, Sai số: " + tolerance + "%, Số vạch: " + bands;
+  document.getElementById('result').innerHTML = html;
+};
+</script>
+</body>
+</html>
